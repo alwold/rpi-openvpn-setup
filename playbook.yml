@@ -1,0 +1,11 @@
+- hosts: all
+  sudo: yes
+  tasks:
+  - name: install openvpn
+    apt: name=openvpn state=latest
+  - name: install bridge-utils
+    apt: name=bridge-utils state=latest
+  - name: enable ip forwarding
+    sysctl: name=net.ipv4.ip_forward value=1 reload=yes
+  # - name: set ip address
+
