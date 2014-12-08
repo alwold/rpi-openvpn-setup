@@ -1,5 +1,18 @@
 - hosts: all
   sudo: yes
+  roles:
+    - role: bennojoy.network_interface
+      network_bridge_interfaces:
+      - device: br0
+        type: bridge
+        bootproto: static
+        address: 192.168.22.151
+        netmask: 255.255.255.0
+        ports: [eth0, tap0]
+        route:
+        - network: 0.0.0.0
+          netmask: 0.0.0.0
+          gateway: 192.168.22.1
   tasks:
   - name: install openvpn
     apt: name=openvpn state=latest
@@ -7,5 +20,4 @@
     apt: name=bridge-utils state=latest
   - name: enable ip forwarding
     sysctl: name=net.ipv4.ip_forward value=1 reload=yes
-  # - name: set ip address
 
